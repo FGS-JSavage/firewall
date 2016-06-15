@@ -46,6 +46,12 @@ firewall_rule 'allow world to mosh' do
   only_if { linux? && node['firewall']['allow_mosh'] }
 end
 
+firewall_rule 'allow world to sql_server' do
+  port 1433
+  source '0.0.0.0/0'
+  only_if { windows? && node['firewall']['allow_sql_server'] }
+end
+
 # allow established connections, ufw defaults to this but iptables does not
 firewall_rule 'established' do
   stateful [:related, :established]
